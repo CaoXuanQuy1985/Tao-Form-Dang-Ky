@@ -1,0 +1,88 @@
+<h2 class="text-center">User Registration</h2>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="col-md-6 offset-md-3">
+
+  <div class="form-group row">
+    <label class="col">
+      Email:
+      <input type="email" class="form-control" formControlName="email"/>
+    </label>
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched">
+    Invalid Email !!!
+  </div>
+
+  <fieldset formGroupName="pwGroup">
+    <div class="form-group row">
+      <label class="col">
+        Password:
+        <input type="password" class="form-control" formControlName="password"/>
+      </label>
+    </div>
+    <div class="form-group row">
+      <label class="col">
+        Confirm Password:
+        <input type="password" class="form-control" formControlName="confirmPassword"/>
+      </label>
+    </div>
+  </fieldset>
+  <div class="alert alert-danger" role="alert"
+       *ngIf="registerForm.hasError('passwordnotmatch', ['pwGroup']) &&
+  registerForm.get('pwGroup').touched">
+    Password does not match !!!
+  </div>
+
+  <div class="form-group row">
+    <label class="col">
+      Country:
+      <select name="country" (change)="changeCountry($event)" class="form-control" formControlName="country">
+        <option value="">Chọn</option>
+        <option value="vietnam">Viet Nam</option>
+        <option value="china">China</option>
+        <option value="italia">Italia</option>
+        <option value="spain">Spain</option>
+        <option value="american">American</option>
+      </select>
+    </label>
+  </div>
+  <div class="alert alert-danger" role="alert"
+          *ngIf="registerForm.get('country').hasError('required')">
+    <sup>*</sup>Please enter your country !!!
+  </div>
+
+  <div class="form-group row">
+    <label class="col">
+      Age:
+      <input type="number" class="form-control" formControlName="age"/>
+    </label>
+  </div>
+  <div class="alert alert-danger" role="alert"
+          *ngIf="registerForm.hasError('agelessthan18',['age']) &&
+          registerForm.get('age').touched">
+    <span>Age must be greater than 18</span>
+  </div>
+
+  <div class="form-group row">
+    <label>Gender:</label>
+    <input id="male" type="radio" value="male" name="gender" formControlName="gender">Male
+    <input id="female" type="radio" value="female" name="gender" formControlName="gender">Female
+  </div>
+  <div class="alert alert-danger" role="alert"
+       *ngIf="isSubmitted && registerForm.get('gender').hasError('required')">
+    <span>Please select your gender</span>
+  </div>
+
+  <div class="form-group row">
+    <label class="col">
+      Phone:
+      <input type="text" class="form-control" formControlName="phone"/>
+    </label>
+  </div>
+  <div class="alert alert-danger" role="alert"
+          *ngIf="registerForm.hasError('phonenotvalid', ['phone']) && registerForm.get('phone').touched">
+  <span>Phone format is invalid</span>
+  </div>
+
+  <div class="form-group row">
+    <button class="btn btn-info" type="submit">Submit</button>
+  </div>
+</form>
