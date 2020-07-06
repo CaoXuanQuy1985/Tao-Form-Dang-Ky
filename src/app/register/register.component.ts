@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       pwGroup: this.fb.group({
-        password: '',
+        password: ['', [Validators.minLength(6)]],
         confirmPassword: ''
       }, {validator: comparePassword}),
       country: ['', Validators.required],
@@ -61,6 +61,10 @@ export class RegisterComponent implements OnInit {
 
   changeGender(event) {
     this.country.setValue(event.target.value);
+  }
+
+  get password() {
+    return this.registerForm.get('password');
   }
 
   onSubmit() {
